@@ -47,10 +47,10 @@ See URL `https://github.com/bitc/hdevtools'."
    (eval (apply #'append (mapcar (lambda (db) (list "-g" "-package-db" "-g" db))
                                  flycheck-ghc-package-databases)))
    (eval (list
-          "-g" "-i" "-g"
-          (flycheck-module-root-directory
-           (flycheck-find-in-buffer flycheck-haskell-module-re))))
-   (eval (apply #'append (mapcar (lambda (db) (list "-g" "-i" "-g" db))
+          "-g" (concat "-i"
+		  (flycheck-module-root-directory
+		   (flycheck-find-in-buffer flycheck-haskell-module-re)))))
+   (eval (apply #'append (mapcar (lambda (db) (list "-g" (concat "-i" db)))
                                  flycheck-ghc-search-path)))
    source)
   :error-patterns
