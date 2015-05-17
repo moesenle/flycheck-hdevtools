@@ -44,13 +44,13 @@ See URL `https://github.com/bitc/hdevtools'."
   ("hdevtools" "check" "-g" "-Wall"
    (eval (when flycheck-ghc-no-user-package-database
            (list "-g" "-no-user-package-db")))
-   (eval (apply #'append (mapcar (lambda (db) (list "-g" "-package-db" "-g" db))
+   (eval (apply #'append (mapcar (lambda (db) (concat "-g-package-db" db))
                                  flycheck-ghc-package-databases)))
-   (eval (list
-          "-g" (concat "-i"
-		  (flycheck-module-root-directory
-		   (flycheck-find-in-buffer flycheck-haskell-module-re)))))
-   (eval (apply #'append (mapcar (lambda (db) (list "-g" (concat "-i" db)))
+   (eval (concat
+          "-g-i"
+          (flycheck-module-root-directory
+           (flycheck-find-in-buffer flycheck-haskell-module-re))))
+   (eval (apply #'append (mapcar (lambda (db) (list (concat "-g-i" db)))
                                  flycheck-ghc-search-path)))
    source)
   :error-patterns
