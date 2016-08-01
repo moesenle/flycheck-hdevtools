@@ -52,6 +52,7 @@ See URL `https://github.com/bitc/hdevtools'."
 		   (flycheck-find-in-buffer flycheck-haskell-module-re)))))
    (eval (apply #'append (mapcar (lambda (db) (list "-g" (concat "-i" db)))
                                  flycheck-ghc-search-path)))
+   "-p" source-original
    source-inplace)
   :error-patterns
   ((warning line-start (file-name) ":" line ":" column ":"
