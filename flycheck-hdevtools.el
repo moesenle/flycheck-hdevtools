@@ -56,14 +56,14 @@ See URL `https://github.com/bitc/hdevtools'."
    source-inplace)
   :error-patterns
   ((warning line-start (file-name) ":" line ":" column ":"
-            (or " " "\n ") "Warning:" (optional "\n")
+            (or " " "\n    ") "Warning:" (optional "\n")
             (message
              (one-or-more " ") (one-or-more not-newline)
              (zero-or-more "\n"
                            (one-or-more " ")
                            (one-or-more not-newline)))
             line-end)
-   (error line-start (file-name) ":" line ":" column ":"
+   (error line-start (file-name) ":" line ":" column ":" (optional " error:")
           (or (message (one-or-more not-newline))
               (and "\n"
                    (message
@@ -74,9 +74,7 @@ See URL `https://github.com/bitc/hdevtools'."
           line-end))
   :error-filter
   (lambda (errors)
-    (-> errors
-      flycheck-dedent-error-messages
-      flycheck-sanitize-errors))
+    (flycheck-sanitize-errors (flycheck-dedent-error-messages errors)))
   :modes haskell-mode
   :next-checkers ((warning . haskell-hlint)))
 
